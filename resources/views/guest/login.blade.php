@@ -17,12 +17,12 @@
                     @csrf
                     {{-- email --}}
                     <div class="form-floating mb-4">
-                        <input type="email" name="email" id="email" class="form-control text-primary" placeholder="email" required style="font-size: 0.9rem;">
+                        <input type="email" name="email" id="email" class="form-control text-primary" placeholder="" required style="font-size: 0.9rem;">
                         <label for="email" class="text-primary">Email</label>
                     </div>
                     {{-- password --}}
                     <div class="form-floating mb-1">
-                        <input type="password" name="password" id="password" class="form-control" placeholder="password" required style="font-size: 0.9rem;">
+                        <input type="password" name="password" id="password" class="form-control" placeholder="" required style="font-size: 0.9rem;">
                         <label for="password" class="text-primary">Password</label>
                     </div>
                     {{-- show password --}}

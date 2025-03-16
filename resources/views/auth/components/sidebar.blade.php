@@ -42,12 +42,17 @@
                     Records
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('respondents') }}" class="nav-link text-primary {{ Route::currentRouteName()  == 'respondents' ? 'nav-link-active' : '' }}" style="font-weight: 600;">
-                    <i class="bi bi-people"></i>
-                    Respondents
-                </a>
-            </li>
+            
+            {{-- ################################## IF ADMIN ################################# --}}
+            @if (Auth::user()->role == 'admin')
+                <li class="nav-item">
+                    <a href="{{ route('respondents') }}" class="nav-link text-primary {{ Route::currentRouteName()  == 'respondents' ? 'nav-link-active' : '' }}" style="font-weight: 600;">
+                        <i class="bi bi-people"></i>
+                        Respondents
+                    </a>
+                </li>
+            @endif
+            
             <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link text-primary" style="font-weight: 600;">
                     <i class="bi bi-box-arrow-left"></i>

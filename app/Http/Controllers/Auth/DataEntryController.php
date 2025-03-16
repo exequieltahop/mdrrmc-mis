@@ -12,10 +12,19 @@ class DataEntryController extends Controller
 {
     public function index() {
         try {
+            // RESPONDENTS
             $respondents = $this->get_respondents();
-            return view('auth.data-entry', ['respondents' => $respondents]);
+            
+            
+            // RETURN VIEW WITH DATA
+            return view('auth.data-entry', 
+                [
+                    'respondents' => $respondents, 
+                ]
+            );
+
         } catch (\Throwable $th) {
-            dd("Error : $th->getMessage()");
+            throw $th;
         }
     }
 

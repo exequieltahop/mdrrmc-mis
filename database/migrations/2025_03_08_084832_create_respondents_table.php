@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('first_name')->notNull();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->notNull();
-            // $table->string('age')->notNull();
             $table->enum('gender', ['m', 'f', 'pnts'])->notNull();
             $table->string('address')->notNull();
             $table->string('birthdate')->notNull();
