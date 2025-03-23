@@ -1,5 +1,4 @@
 $(function() {
-
     // login
     $('#form_login').on('submit', function(e){
         e.preventDefault();

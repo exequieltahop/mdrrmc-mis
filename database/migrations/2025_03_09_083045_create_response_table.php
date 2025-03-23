@@ -13,11 +13,7 @@ return new class extends Migration
     {
         Schema::create('response', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('respondent_id');
-            $table->foreign('respondent_id')
-                ->references('id')
-                ->on('respondents')
-                ->onDelete('cascade');
+            $table->string('respondent_id');
             $table->string('location')->notNull();
             $table->dateTime('date_time')->notNull();
             $table->enum('involve',['m','f','mf'])->notNull();

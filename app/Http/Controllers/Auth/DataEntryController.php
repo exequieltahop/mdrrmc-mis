@@ -14,12 +14,12 @@ class DataEntryController extends Controller
         try {
             // RESPONDENTS
             $respondents = $this->get_respondents();
-            
-            
+
+
             // RETURN VIEW WITH DATA
-            return view('auth.data-entry', 
+            return view('auth.data-entry',
                 [
-                    'respondents' => $respondents, 
+                    'respondents' => $respondents,
                 ]
             );
 
@@ -52,7 +52,7 @@ class DataEntryController extends Controller
                 $respondent_ids[] = Crypt::decrypt($respondent);
             }
 
-            // save data
+            // save datas
             ResponseModel::create([
                 'respondent_id' => implode(', ', $respondent_ids),
                 'location' => $request->location,

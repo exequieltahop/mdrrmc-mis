@@ -24,4 +24,10 @@ class RespondentModel extends Model
         'civil_status',
         'photo'
     ];
+
+    // GET RESPONDER FULL NAME
+    public function scopeFullName($query, $id) {
+        return $query->selectRaw('CONCAT(first_name, " ", middle_name, " ", last_name) AS full_name')
+                     ->where('id', $id);
+    }
 }

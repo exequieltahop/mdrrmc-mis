@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authChecker']], function(){
 
     // RECORDS
     Route::get('/records', [RecordsController::class, 'index'])->name('records');
+        Route::delete('/delete/{id}', [RecordsController::class, 'delete_record']);
 
     // RESPONDENTS
     Route::get('/respondents', [RespondentController::class, 'index'])
