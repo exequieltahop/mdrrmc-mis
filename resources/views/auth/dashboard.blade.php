@@ -7,7 +7,7 @@
 @section('auth')
     <section class="container-fluid p-0 m-0">
         <div class="row">
-            
+
             {{-- ##################################### IF ADMIN ################################# --}}
             @if (Auth::user()->role == 'admin')
                 <div class="col-sm-3 p-3">

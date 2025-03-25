@@ -97,7 +97,6 @@
                             <input type="datetime-local" name="datetime" id="datetime" class="form-control text-primary" placeholder="Date-Time" required>
                         </div>
 
-
                         {{-- INVOLVE --}}
                         <div class="mb-3 col-sm-6">
                             <label for="involve" class="fw-bold mb-1 text-primary">INVOLVE</label>

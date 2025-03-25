@@ -32,4 +32,13 @@ class ResponseModel extends Model
             'date_time' => 'datetime',
         ];
     }
+
+    // get a record
+    public function scopeGetRecord($query, array $data, $id) {
+        try {
+            return $query->where($id)->select($data);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

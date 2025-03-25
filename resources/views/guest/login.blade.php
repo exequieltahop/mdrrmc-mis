@@ -3,7 +3,9 @@
 @section('title', 'Log In')
 
 @section('guest')
+
     @vite(['resources/css/guest/login.css', 'resources/js/guest/login.js'])
+
     <section class="container-fluid vh-100 d-flex justify-content-center align-items-center">
         <div class="card w-100 shadow-lg" style="max-width: 500px;">
             <div class="card-body p-4">

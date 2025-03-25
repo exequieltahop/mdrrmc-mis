@@ -11,11 +11,11 @@ class Modal extends Component
     /**
      * Create a new component instance.
      */
-    public $id, $modalTitle;
-    
-    public function __construct($id, $modalTitle)
+    public $modalId, $modalTitle;
+
+    public function __construct($modalId, $modalTitle)
     {
-        $this->id = $id;
+        $this->modalId = $modalId;
         $this->modalTitle = $modalTitle;
     }
 

@@ -16,9 +16,10 @@ class RecordsController extends Controller
 
             // RESPONSES
             $responses = $this->get_response();
+            // dd($responses);
             // RESPONDENTS
             $respondents = $this->get_respondents();
-            // $res = RespondentModel::fullName(1)->first();
+
             // return view with compact
             return view('auth.records', [
                 'responses' => $responses,
@@ -114,7 +115,7 @@ class RecordsController extends Controller
             $decrypted_id = Crypt::decrypt($id);
 
             // GET ROW
-            $response = ResponseModel::find($id);
+            $response = ResponseModel::find($decrypted_id);
 
             // SOFT DELETE DATA
             $delete_status = $response->delete();
@@ -126,6 +127,21 @@ class RecordsController extends Controller
 
             // ELSE RETURN SUCCESS MESSAGE
             return response()->json(['success'=> 1], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
+
+    // get record
+    public function get_record($id) {
+        try {
+            $decrypted_id = Crypt::decrypt($id);
+
+            $data_raw = getRecord($id)->get();
+
+            dd($data_raw);
+
+            return response()->json(['data' => $data_raw], 200);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
         }
