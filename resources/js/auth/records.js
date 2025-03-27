@@ -16,13 +16,10 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     delete_btn_init(token);
 
     // init multiple select tag in edit form
-    init_multiple_select_responder();
+    // init_multiple_select_responder();
 
     // init set location for edit form
     // set_location_edit_form();
-
-    // edit form submit
-    // submit_edit_response();
 
     // init edit record
     init_edit_record();
@@ -138,42 +135,146 @@ function set_location_edit_form(){
 }
 
 // edit form submit
-function submit_edit_response(){
-    const forms = document.querySelectorAll('.form-edit-response');
+function submit_edit_response(id){
+    const form = document.getElementById('form-edit-record');
+    const submit_btn = document.getElementById('submit-btn-edit-record');
 
-    Array.from(forms).forEach(item => {
-        // const submit_btn = item.querySelector('.btn-edit-response');
-        // console.log(submit_btn);
-        item.onsubmit = async (e)=>{
-            e.preventDefault();
-            console.log(e.target);
+    form.onsubmit = async (e)=>{
+        e.preventDefault();
 
-            // if(btn){
-            //     console.log(1);
-            // }else{
-            //     console.log(0);
-            // }
+        try {
+            /**
+             * url, and data (form data)
+             */
+            const url = `/admin/update-record`;
+            const data = new FormData(e.target);
+
+            data.append('id', id); // append the id for update
+
+            /**
+             * the fetch api with method put body of data(form data)
+             */
+            const response = await fetch(url, {
+                method : 'POST',
+                body: data
+            });
+
+            const response_json = await response.json(); // parse json response
+
+            /**
+             * check different type of responses
+             * if error throw new error
+             * if special error then directly display error
+             * if success then display success alert
+             * then after 1500 ms reload page
+             */
+            if (response_json.error) {
+                throw new Error(response_json.error);
+            } else if (response_json.special_error) {
+                toastr.error(response_json.special_error);
+            } else if (response_json.success) {
+                toastr.success("Successfully updated record!");
+                setInterval(()=>{
+                    window.location.reload();
+                }, 1500);
+            }
+        } catch (error) { // catch thrown errors and handle them accordingly
+            toastr.error("Failed to update record, Pls try again!, If the problem persist pls contact developer!");
+            console.error(error.message);
         }
-    });
+    };
 }
 
 // edit record
 function init_edit_record(){
+    // get all edit btn
     const edit_btn = document.querySelectorAll('.edit-record-btn');
 
+    // loop node elements
     Array.from(edit_btn).forEach(btn => {
         const id = btn.dataset.id;
 
+        // onclick edit btn
         btn.onclick = async (e)=>{
             e.stopImmediatePropagation();
 
             try {
-                const url = `/`;
+                // uri and fetch api
+                const url = `/admin/get-record/${id}`;
                 const response = await fetch(url);
-            } catch (error) {
+
+                // parse json
+                const response_json = await response.json();
+
+                // check the response if error, specia error or data
+                if (response_json.error) {
+                    throw new Error(response_json.error);
+                } else if (response_json.special_error) {
+                    toastr.error(response_json.special_error);
+                } else if (response_json.data) {
+
+                    // get response data
+                    const data = response_json.data[0];
+
+                    // get all input from the form
+                    const respondent = document.getElementById('responder');
+                    const location = document.getElementById('location');
+                    const datetime = document.getElementById('datetime');
+                    const involve = document.getElementById('involve');
+                    const hospital = document.getElementById('hospital');
+                    const incident_type = document.getElementById('incident_type');
+                    const cause = document.getElementById('cause');
+                    const remarks = document.getElementById('remarks');
+
+                    // loop the option in the select tag to check what are the correct respondent
+                    Array.from(respondent.querySelectorAll('option')).forEach(item => {
+                        if(data.respondent_full_names.includes(item.textContent.toString().trim())){
+                            item.selected = true;
+                            console.log(1);
+                        }else{
+                            console.log(2);
+                            item.selected = false;
+                        }
+                    });
+
+                    /**
+                     * get select tag
+                     * if not null then remove it
+                     * if null nothing happens
+                     */
+                    const prev_multi_select = document.querySelector('.mult-select-tag');
+
+                    /**
+                     * remove node
+                     */
+                    if(prev_multi_select){
+                        prev_multi_select.remove();
+                    }
+
+                    // init multiple select tag in edit form
+                    init_multiple_select_responder();
+
+                    // set values of the input in the form base from the data of the response from the database
+                    location.value = data.location;
+                    datetime.value = data.formatted_date_time;
+                    involve.value = data.involve;
+                    hospital.value = data.refered_hospital;
+                    incident_type.value = data.incident_type;
+                    cause.value = data.immediate_cause_or_reason;
+                    remarks.value = data.remark;
+
+                    // edit form submit
+                    submit_edit_response(id);
+                } else {
+                    throw new Error("Unexpected Error! Please Contact Developer!");
+                }
+
+            } catch (error) { // catch thrown errors
                 console.error(error.message);
                 toastr.error("Something went wrong!, Please Contact Developer!", 'Error');
             }
+
         };
+
     });
 }

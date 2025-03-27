@@ -22,20 +22,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authChecker']], function(){
 
     // DATA ENTRY
     Route::get('/data-entry', [DataEntryController::class, 'index'])->name('data-entry');
-        // SUBMIT RESPONSE
         Route::post('/submit-response', [DataEntryController::class, 'submit_response']);
 
     // RECORDS
     Route::get('/records', [RecordsController::class, 'index'])->name('records');
         Route::delete('/delete/{id}', [RecordsController::class, 'delete_record']);
         Route::get('/get-record/{id}', [RecordsController::class, 'get_record']);
+        Route::put('/update-record', [RecordsController::class, 'update_record']);
 
     // RESPONDENTS
     Route::get('/respondents', [RespondentController::class, 'index'])
         ->name('respondents')
         ->middleware(RoleChecker::class.':admin');
-
-        // ADD RESPONDENT
         Route::post('/add-respondent', [RespondentController::class,'add_respondent'])
             ->middleware(RoleChecker::class.':admin');
 });

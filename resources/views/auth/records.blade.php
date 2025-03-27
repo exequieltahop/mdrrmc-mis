@@ -127,8 +127,9 @@
     {{-- MODAL EDIT RECORD --}}
     <x-modal modal-id="edit-record-modal" modal-title="Edit Record">
         {{-- FORM --}}
-        <x-form class="w-100 form-edit-response" method="POST" style="max-width: 800px;">
+        <x-form class="w-100 form-edit-response p-3" id="form-edit-record" style="max-width: 800px;">
             @csrf
+            @method('PUT')
             {{-- INPUT --}}
             <div class="row">
                 {{-- RESPONDENT --}}
@@ -157,7 +158,7 @@
                 {{-- LOCATION --}}
                 <div class="mb-3 col-sm-6">
                     <label for="location" class="fw-bold mb-1 text-primary">LOCATION</label>
-                    <select name="location" class="form-select text-primary edit-location" required>
+                    <select name="location" id="location" class="form-select text-primary edit-location" required>
                         <option value="" disabled selected>Select Brgy</option>
                         <option value="benit">Benit</option>
                         <option value="buac_daku">Buac Daku</option>
@@ -249,13 +250,23 @@
                 </div>
             </div>
 
-            {{-- BTN SUBMIT --}}
-            <button
-                class="btn btn-primary fw-bold px-4 d-flex algin-items-center gap-1 btn-edit-response"
-                type="submit" id="submit-btn-edit-record">
-                <i class="bi bi-floppy"></i>
-                Update
-            </button>
+            {{-- BUTTONS --}}
+            <div class="d-flex justify-content-end align-items-center gap-2">
+                {{-- CLOSE BTN --}}
+                <button
+                    class="btn btn-primary fw-bold px-4 m-0"
+                    data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg" style="font-style: normal;"> Cancel</i>
+                </button>
+
+                {{-- BTN SUBMIT --}}
+                <button
+                    class="btn btn-primary fw-bold px-4 m-0 d-flex algin-items-center gap-1 btn-edit-response"
+                    type="submit"
+                    id="submit-btn-edit-record">
+                    <i class="bi bi-floppy" style="font-style: normal;"> Update</i>
+                </button>
+            </div>
         </x-form>
     </x-modal>
 @endsection

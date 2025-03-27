@@ -36,7 +36,22 @@ class ResponseModel extends Model
     // get a record
     public function scopeGetRecord($query, array $data, $id) {
         try {
-            return $query->where($id)->select($data);
+            return $query->where('id', $id)->select($data);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    // update a row
+    public static function UpdateRow(array $data, $id) {
+        try {
+            $record = self::find($id);
+
+            if(!$record){
+                throw new \Exception("Record not found!");
+            }
+
+            return $record->update($data);
         } catch (\Throwable $th) {
             throw $th;
         }

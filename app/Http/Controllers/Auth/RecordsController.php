@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ResponseModel;
 use App\Models\RespondentModel;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Carbon;
 
 class RecordsController extends Controller
 {
@@ -135,13 +136,106 @@ class RecordsController extends Controller
     // get record
     public function get_record($id) {
         try {
+            // decrypt encrypted id
             $decrypted_id = Crypt::decrypt($id);
 
-            $data_raw = getRecord($id)->get();
+            // get response data for edit
+            $data_raw = ResponseModel::getRecord(['*'], $decrypted_id)
+                ->get()
+                ->map(function($query){ // map data for respondents fullname
+                    /**
+                     * $respondent_array for storing the full names of the responders
+                     * $respondent_id for the extracted data from string into array
+                     * $respondent_id_count for array length of the respondent array ids
+                     */
+                    $respondent_array = [];
+                    $respondent_id = explode(",", $query->respondent_id);
+                    $respondent_id_count = count($respondent_id);
 
-            dd($data_raw);
+                    /**
+                     * for looping the array then get full name of the responders
+                     * from the database as save it into the array $respondent_array
+                     */
+                    foreach($respondent_id as $id){
+                        $name_data = RespondentModel::fullName($id)->first();
+                        $respondent_array[] = $name_data->full_name;
+                    }
+
+                    /**
+                     * check if count of the $respondent_array is equal to
+                     * the actual array length of the respondent
+                     */
+                    if(count($respondent_array) == $respondent_id_count){
+                        $query->respondent_full_names = $respondent_array;
+                    }
+
+                    // format datetime
+                    $query->formatted_date_time = $query->date_time->format('Y-m-d\TH:i');
+
+                    return $query; // return query
+                });
+            // dd($data_raw);
 
             return response()->json(['data' => $data_raw], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
+
+    // update record
+    public function update_record(Request $request) {
+        try {
+            // validate request
+            $request->validate([
+                'id' => ['required'],
+                'respondent' => ['required', 'array'],
+                'respondent.*' => ['string'],
+                'location' => ['required'],
+                'datetime' => ['required'],
+                'involve' => ['required'],
+                'hospital' => ['required'],
+                'cause' => ['required'],
+                'incident_type' => ['required']
+            ]);
+
+            // decrypt id
+            $record_id = Crypt::decrypt($request->id);
+
+            // prepare array to store ids of the responders
+            $respondent_ids_array_decrypted = [];
+
+            /**
+             * loop all responders id and decrypt it
+             * then save it into $respondent_ids_array_decrypted array
+            */
+             foreach($request->respondent as $respo){
+                $respondent_ids_array_decrypted[] = Crypt::decrypt($respo);
+            }
+
+            $respondent_ids = implode(", ", $respondent_ids_array_decrypted); // make and array from string
+
+            // make update data
+            $update_data = [
+                'respondent_id' => $respondent_ids,
+                'location' => $request->location,
+                'date_time' => $request->datetime,
+                'involve' => $request->involve,
+                'refered_hospital' => $request->hospital,
+                'incident_type' => $request->incident_type,
+                'immediate_cause_or_reason' => $request->cause,
+                'remark' => $request->remarks
+            ];
+
+            // updat row
+            $update_status = ResponseModel::UpdateRow($update_data, $record_id);
+
+            // check if update successfully if not then throw new Exception
+            if(!$update_status){
+                throw new \Exception("Failed to update");
+            }
+
+            // return response success
+            return response()->json(['success' => 1], 200);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
         }
