@@ -2,8 +2,8 @@ MDRRMC MIS INSTALLATION GUIDE
 
 Installation Steps:
 
-1. Clone the repository:
-   git clone https://github.com/exequieltahop/mdrrmc-mis.git
+1. Clone the repository (master branch):  
+   git clone -b master https://github.com/exequieltahop/mdrrmc-mis.git
 
 2. Copy the .env.example file into the root directory:
    cp .env.example .env
