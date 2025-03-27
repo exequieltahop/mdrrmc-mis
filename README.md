@@ -1,27 +1,50 @@
-<section>
-    <h5>MDRRMC MIS INSTALLATION GUIDE</h5>
+MDRRMC MIS INSTALLATION GUIDE
 
-    <ol>
-        <li>Copy the https://github.com/exequieltahop/mdrrmc-mis.git</li>
-        <li>Copy the env.exampe into root directory or same as the env.example</li>
-        <li>Rename the .env.example into .env</li>
-        <li>Then in the terminal, type composer install</li>
-        <li>Then type npm install</li>
-        <li>Then type composer update</li>
-        <li>Then type npm update</li>
-        <li>Then type php artisan key:generate</li>
-        <li>Make a database name in your (xampp, laragon, etc) </li>
-        <li>Change the sqlite into mysql in the .env file</li>
-        <li>Make sure to put right credentials in the .env mysql</li>
-        <li>In the terminal type php artisan migrate:fresh --seed</li>
-    </ol>
+Installation Steps:
 
-    <h5>Requirements</h5>
-    <ul>
-        <li>git</li>
-        <li>composer</li>
-        <li>PHP 8.2 Above (xampp updated version)</li>
-        <li>node.js</li>
-        <li>Mysql</li>
-    </ul>
-</section>
+1. Clone the repository:
+   git clone https://github.com/exequieltahop/mdrrmc-mis.git
+
+2. Copy the .env.example file into the root directory:
+   cp .env.example .env
+
+3. Rename .env.example to .env (if not already done).
+
+4. Install dependencies:
+   composer install
+   npm install
+
+5. Update dependencies:
+   composer update
+   npm update
+
+6. Generate the application key:
+   php artisan key:generate
+
+7. Create a database in XAMPP, Laragon, or MySQL.
+
+8. Open the .env file and:
+   - Change DB_CONNECTION=sqlite to DB_CONNECTION=mysql
+   - Set the correct database credentials:
+     DB_DATABASE=your_database_name
+     DB_USERNAME=your_username
+     DB_PASSWORD=your_password
+
+9. Run database migrations with seed data:
+   php artisan migrate:fresh --seed
+
+---
+
+Requirements:
+
+- Git
+- Composer
+- PHP 8.2 or above (Make sure XAMPP is updated)
+- Node.js
+- MySQL
+
+---
+
+Additional Notes:
+- Ensure Apache and MySQL are running in XAMPP/Laragon before proceeding.
+- If you encounter permission issues, try running the commands with sudo (for macOS/Linux).
