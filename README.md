@@ -2,6 +2,7 @@ MDRRMC MIS INSTALLATION GUIDE
 
 Installation Steps:
 
+IN THE TERMINAL 
 1. Clone the repository (master branch):  
    git clone -b master https://github.com/exequieltahop/mdrrmc-mis.git
 
@@ -10,14 +11,15 @@ Installation Steps:
 
 3. Rename .env.example to .env (if not already done).
 
+IN THE TERMINAL 
 4. Install dependencies:
-   composer install
+   composer install,
    npm install
-
+IN THE TERMINAL 
 5. Update dependencies:
-   composer update
+   composer update,
    npm update
-
+IN THE TERMINAL 
 6. Generate the application key:
    php artisan key:generate
 
@@ -30,6 +32,7 @@ Installation Steps:
      DB_USERNAME=your_username
      DB_PASSWORD=your_password
 
+IN THE TERMINAL 
 9. Run database migrations with seed data:
    php artisan migrate:fresh --seed
 
