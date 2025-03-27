@@ -15,10 +15,12 @@ IN THE TERMINAL
 4. Install dependencies:
    composer install,
    npm install
+
 IN THE TERMINAL 
 5. Update dependencies:
    composer update,
    npm update
+
 IN THE TERMINAL 
 6. Generate the application key:
    php artisan key:generate
