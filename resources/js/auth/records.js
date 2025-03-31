@@ -59,7 +59,7 @@ function delete_btn_init(token){
                     try {
 
                         // DELETE API ENDPOINT
-                        const uri = `/admin/delete/${id}`;
+                        const uri = `/delete/${id}`;
 
                         // FETCH API
                         const response = await fetch(uri, {
@@ -146,7 +146,7 @@ function submit_edit_response(id){
             /**
              * url, and data (form data)
              */
-            const url = `/admin/update-record`;
+            const url = `/update-record`;
             const data = new FormData(e.target);
 
             data.append('id', id); // append the id for update
@@ -200,7 +200,7 @@ function init_edit_record(){
 
             try {
                 // uri and fetch api
-                const url = `/admin/get-record/${id}`;
+                const url = `/get-record/${id}`;
                 const response = await fetch(url);
 
                 // parse json

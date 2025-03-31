@@ -91,30 +91,32 @@
                                 </td>
                                 <td>{{ $response->refered_hospital }}</td>
                                 <td>{{ $response->remark }}</td>
-                                <td>
-                                    {{-- ACTION EDIT DELETE --}}
-                                    <div class="dropdown">
-                                        <i id="dropdownMenuButton" class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"></i>
+                                @if (Auth::user()->role == "admin")
+                                    <td>
+                                        {{-- ACTION EDIT DELETE --}}
+                                        <div class="dropdown">
+                                            <i id="dropdownMenuButton" class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"></i>
 
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            {{-- EDIT --}}
-                                            <div class="dropdown-item text-primary edit-record-btn"
-                                                data-id="{{ $response->encrypted_id }}"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#edit-record-modal"
-                                                style="cursor: pointer;">
-                                                <i class="bi bi-pencil-fill"></i>
-                                                <span>Edit</span>
-                                            </div>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                {{-- EDIT --}}
+                                                <div class="dropdown-item text-primary edit-record-btn"
+                                                    data-id="{{ $response->encrypted_id }}"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#edit-record-modal"
+                                                    style="cursor: pointer;">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                    <span>Edit</span>
+                                                </div>
 
-                                            {{-- DELETE --}}
-                                            <div class="dropdown-item delete-action-btn text-danger" style="cursor: pointer;" data-id="{{ $response->encrypted_id }}">
-                                                <i class="bi bi-trash-fill"></i>
-                                                <span>Delete</span>
+                                                {{-- DELETE --}}
+                                                <div class="dropdown-item delete-action-btn text-danger" style="cursor: pointer;" data-id="{{ $response->encrypted_id }}">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                    <span>Delete</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

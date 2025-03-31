@@ -2,7 +2,7 @@
 
 @section('title', 'Dashboard - MIMS')
 
-@vite(['resources/css/auth/dashboard.js', 'resources/css/auth/dashboard.css'])
+@vite(['resources/js/auth/dashboard.js', 'resources/css/auth/dashboard.css'])
 
 @section('auth')
     <section class="container-fluid p-0 m-0">

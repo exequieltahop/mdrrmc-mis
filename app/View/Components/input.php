@@ -16,7 +16,7 @@ class input extends Component
     public $name, $inputType, $label, $required;
 
     // FN CONSTRUCTOR
-    public function __construct($name, $inputType, $label, $required)
+    public function __construct($name, $inputType = "text", $label, $required = true)
     {
         $this->name = $name;
         $this->inputType = $inputType;

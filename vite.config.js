@@ -16,6 +16,7 @@ export default defineConfig({
                 'resources/js/auth/respondents.js',
                 'resources/css/auth/dashboard.css',
                 'resources/js/auth/dashboard.js',
+                'resources/js/auth/users-list.js',
             ],
             refresh: true,
         }),

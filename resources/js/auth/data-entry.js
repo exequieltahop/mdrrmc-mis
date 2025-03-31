@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             */
 
            // url
-           const url = `/admin/submit-response`;
+           const url = `/submit-response`;
 
            // fetch api
             const response = await fetch(url, {

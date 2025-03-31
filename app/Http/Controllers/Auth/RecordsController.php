@@ -17,7 +17,7 @@ class RecordsController extends Controller
 
             // RESPONSES
             $responses = $this->get_response();
-            // dd($responses);
+
             // RESPONDENTS
             $respondents = $this->get_respondents();
 

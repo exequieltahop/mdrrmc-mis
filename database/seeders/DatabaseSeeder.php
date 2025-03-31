@@ -23,13 +23,17 @@ class DatabaseSeeder extends Seeder
                     'name' => 'MDRRMC Admin',
                     'email' => 'mdrrmc.admin@gmail.com',
                     'password' => Hash::make('mdrrmc_strong_password'),
-                    'role' => 'admin'
+                    'role' => 'admin',
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ],
                 [
                     'name' => 'Respondent Lastname',
                     'email' => 'respondent.user@gmail.com',
                     'password' => Hash::make('respondent_strong_password'),
-                    'role' => 'user'
+                    'role' => 'user',
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]
         ]);
 

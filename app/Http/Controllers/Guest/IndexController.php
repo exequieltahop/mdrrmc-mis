@@ -30,7 +30,7 @@ class IndexController extends Controller
             }
 
             // return response json
-            return response()->json(['success' => 1, 'url' => 'admin/dashboard']);
+            return response()->json(['success' => 1, 'url' => '/dashboard']);
         } catch (\Throwable $th) {
             // return error
             return response()->json(['error' => $th->getMessage()], 404);
