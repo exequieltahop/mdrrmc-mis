@@ -30,7 +30,7 @@ IN THE TERMINAL
 8. Open the .env file and:
    - Change DB_CONNECTION=sqlite to DB_CONNECTION=mysql
    - Set the correct database credentials:
-     DB_DATABASE=your_database_name
+     DB_DATABASE=mdrrmc
      DB_USERNAME=your_username
      DB_PASSWORD=your_password
 
