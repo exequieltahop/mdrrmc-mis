@@ -117,7 +117,7 @@
             modal-title="Add User">
 
             {{-- form edit user --}}
-            <x-form id="edit-user-modal" method="POST" class="p-3">
+            <x-form id="edit-user-form" method="POST" class="p-3" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 

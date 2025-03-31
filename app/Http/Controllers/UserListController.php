@@ -121,6 +121,9 @@ class UserListController extends Controller
     // edit user
     public function edit_user(Request $request) {
         try {
+            /**
+             * Validate request
+             */
             $validator = Validator::make($request->all(), [
                 'edit_id' => 'required',
                 'edit_name' => 'required',
@@ -131,7 +134,7 @@ class UserListController extends Controller
                 $errors = $validator->errors();
 
                 Log::error("Error : " . json_encode($errors->toArray(), JSON_PRETTY_PRINT));
-                return response()->json([], 422, $headers);
+                return response()->json([], 422);
             }
 
             if (!empty($request->edit_new_password) || !empty($request->edit_new_password_confirmation)) {
@@ -141,49 +144,58 @@ class UserListController extends Controller
                 }
             }
 
-            $decrypted_id = Crypt::decrypt($request->edit_id);
+            $decrypted_id = Crypt::decrypt($request->edit_id); // devrypt id
 
-            $user_prev_data = User::find($decrypted_id);
+            $user_prev_data = User::find($decrypted_id); // find user
 
+            // check if user exist
             if(!$user_prev_data){
                 Log::error("Error : User not found for editing, check the request payload if the edit_id was present");
                 return response()->json([], 404);
             }
 
+            // check new email uniqueness
             $email_unique_checker = User::where('email', $request->edit_email)
                 ->whereNot('email', $user_prev_data->email)
                 ->first();
 
+            // cehck email uniqueness
             if($email_unique_checker){
                 Log::error("Error : user update failed, email already exists!");
                 return response()->json([], 409);
             }
 
+            // check if update has change pass
             if(!empty($request->edit_new_password) && !empty($request->edit_new_password_confirmation)){
                 $update_data = [
-                    'name' => $request->name,
-                    'email' => $request->email,
+                    'name' => $request->edit_name,
+                    'email' => $request->edit_email,
                     'password' => Hash::make($request->edit_new_password)
                 ];
             }else{
                 $update_data = [
-                    'name' => $request->name,
-                    'email' => $request->email
+                    'name' => $request->edit_name,
+                    'email' => $request->edit_email
                 ];
 
             }
 
-            $update_status = User::update_row($update_data, $decrypted_id);
+            // update data
+            if($update_data){
+                $update_status = User::update_row($update_data, $decrypted_id);
+            }
 
+            // check if success
             if(!$update_status){
                 Log::error("Error : failed to update user");
                 return response()->json([], 500);
             }
 
-            return response()->json([], 200);
+            return response()->json([], 200); // return response
 
-        } catch (\Throwable $th) {
-            return response()->json([], 500);
+        } catch (\Throwable $th) { // catch errors and exceptions
+            Log::error("Error : ".$th->getMessage()); // log errors
+            return response()->json([], 500); // return response 500 internal server error
         }
     }
 }

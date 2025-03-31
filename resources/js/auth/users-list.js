@@ -189,6 +189,9 @@ function edit_user(table, token){
                 edit_id.value = id;
                 name.value = data.name;
                 email.value = data.email;
+
+                // init edit user
+                submit_edit_user_form(new_password, confirm_new_password, token);
             }
         } catch (error) { // catch errors
             toastr.error("Something Went Wrong!, Pls try again!, If the problem persist contact developer!", "Error");
@@ -201,7 +204,7 @@ function edit_user(table, token){
 
 // submit edit form
 function submit_edit_user_form(new_password, confirm_new_password, token){
-    const form = document.getElementById('edit-user-modal');
+    const form = document.getElementById('edit-user-form');
 
     form.onsubmit = async (e)=>{
         e.preventDefault();
@@ -211,13 +214,40 @@ function submit_edit_user_form(new_password, confirm_new_password, token){
         submit_btn.disabled = true;
 
         try {
+            const formData = new FormData(e.target);
+
+            const data = Object.fromEntries(formData.entries());
+
+            console.log(formData.get('edit_id'));
+
             const response = await fetch('/edit-user', {
                 method : 'PUT',
                 headers: {
+                    'Content-Type': 'application/json',
                     'X-CSRF-TOKEN' : token,
                 },
-                body : new FormData(e.target)
+                body : JSON.stringify(data)
             })
+
+            if(response.status === 404){
+                toastr.error("Error!, Something Went, Pls try again!,Thank you, if the problem persist pls contact developer!");
+            }
+            if(response.status === 409){
+                toastr.error("Error!, Check if email already exist or invalid");
+            }
+            if(response.status === 422){
+                toastr.error("Error!, Check if you change password make sure to make password and confirm password the same");
+            }
+            if(response.status === 500){
+                toastr.error("Error!, Unexpected error, Pls contact developer, Thank you!");
+            }
+            if(response.status === 200){
+                toastr.success("Successfully updated user!");
+
+                setTimeout(()=>{
+                    window.location.reload();
+                },1500);
+            }
 
             submit_btn.disabled = false;
         } catch (error) {
