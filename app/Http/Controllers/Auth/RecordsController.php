@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ResponseModel;
 use App\Models\RespondentModel;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Carbon;
+use Carbon\Carbon;
 
 class RecordsController extends Controller
 {

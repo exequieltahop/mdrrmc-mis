@@ -36,10 +36,19 @@
                     Data Entry
                 </a>
             </li>
+
             <li class="nav-item">
                 <a href="{{ route('records') }}" class="nav-link text-primary {{ Route::currentRouteName()  == 'records' ? 'nav-link-active' : '' }}" style="font-weight: 600;">
                     <i class="bi bi-clipboard-data"></i>
                     Records
+                </a>
+            </li>
+
+            {{-- generate report --}}
+            <li class="nav-item">
+                <a href="{{ route('generate-report', ['year' => Carbon\Carbon::now()->year]) }}" class="nav-link text-primary {{ Route::currentRouteName()  == 'generate-report' ? 'nav-link-active' : '' }}" style="font-weight: 600;">
+                    <i class="bi bi-clipboard-data"></i>
+                    Generate Report
                 </a>
             </li>
 

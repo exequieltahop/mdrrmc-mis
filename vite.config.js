@@ -17,6 +17,7 @@ export default defineConfig({
                 'resources/css/auth/dashboard.css',
                 'resources/js/auth/dashboard.js',
                 'resources/js/auth/users-list.js',
+                'resources/js/auth/generate-report.js',
             ],
             refresh: true,
         }),

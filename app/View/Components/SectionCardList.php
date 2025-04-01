@@ -11,11 +11,13 @@ class SectionCardList extends Component
     /**
      * Create a new component instance.
      */
-    public $listTitle;
+    public $listTitle, $cardBodyClass, $extra, $extraElement;
 
-     public function __construct($listTitle)
+     public function __construct($listTitle,
+                                 $cardBodyClass = "")
     {
         $this->listTitle = $listTitle;
+        $this->cardBodyClass = $cardBodyClass;
     }
 
     /**

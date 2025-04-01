@@ -8,11 +8,10 @@ use App\Http\Controllers\Auth\DataEntryController;
 use App\Http\Controllers\Auth\RecordsController;
 use App\Http\Controllers\Auth\RespondentController;
 use App\Http\Middleware\RoleChecker;
-
+use App\Http\Controllers\UserListController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
-
-use App\Http\Controllers\UserListController;
+use App\Http\Controllers\GenerateReportController;
 
 // GUEST
 Route::get('/', [IndexController::class, 'view_login'])->name('log_in');
@@ -59,4 +58,8 @@ Route::group(['prefix' => '', 'middleware' => ['authChecker']], function(){
         Route::delete('/delete-user/{id}', [UserListController::class, 'delete_user']);
         Route::get('/get-user-data/{id}', [UserListController::class, 'get_user_data']);
         Route::put('/edit-user', [UserListController::class, 'edit_user']);
+
+    // generate report
+    Route::get('/generate-report/{year}', [GenerateReportController::class, 'view_generate_report'])->name('generate-report');
+        Route::get('/view-report/{year}', [GenerateReportController::class, 'generate_pdf_report']);
 });
